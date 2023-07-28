@@ -5,7 +5,7 @@ uint64_t vectorized_loop(uint64_t* A, const uint64_t& size)
 {
     uint64_t r = 0;
     for (uint64_t i = 0; i < size; i++)
-        A[i] += A[i] + 17;
+        A[i] = A[i] + 17;
     for (uint64_t i = 0; i < size; i++)
         r += A[i];
     return r;
