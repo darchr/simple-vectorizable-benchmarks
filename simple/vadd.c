@@ -1,7 +1,7 @@
 #include <stdint.h>
 #include <stdio.h>
 
-uint64_t vectorized_loop(uint64_t* A, const uint64_t& size)
+uint64_t vectorized_loop(uint64_t* A, const uint64_t size)
 {
     uint64_t r = 0;
     for (uint64_t i = 0; i < size; i++)
