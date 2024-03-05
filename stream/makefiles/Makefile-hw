@@ -8,7 +8,7 @@ LDFLAGS = -O2 -fopenmp
 
 # if both m5ops_header_path and m5_build_path are defined, we build the STREAM benchmark with the m5 annotations
 ifneq ($(M5_BUILD_PATH),)
-  CXXFLAGS += -I$(M5OPS_HEADER_PATH)
+  CXXFLAGS += -I$(M5OPS_HEADER_PATH) -I$(M5_BUILD_PATH)../../src/
   CXXFLAGS += -O -DGEM5_ANNOTATION=1
   LDFLAGS += -lm5 -L$(M5_BUILD_PATH)/out/
   TMP_OUTPUT_SUFFIX = $(OUTPUT_SUFFIX)

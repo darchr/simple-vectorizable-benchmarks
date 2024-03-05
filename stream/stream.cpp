@@ -13,6 +13,7 @@
 
 #ifdef GEM5_ANNOTATION
 #include <gem5/m5ops.h>
+#include <m5_mmap.h>
 #endif
 
 // https://stackoverflow.com/questions/3437404/min-and-max-in-c
@@ -78,6 +79,12 @@ int main(int argc, char* argv[])
     static std::vector<TElement> c(array_size, 0);
     static const TElement scale_factor = 3.0;
 
+#ifdef GEM5_ANNOTATION
+    map_m5_mem();
+    m5_exit_addr(0);
+    // CPU switch at this point
+#endif
+
     // warm up
     copy(c, a);
     scale(b, c, scale_factor);
@@ -86,11 +93,27 @@ int main(int argc, char* argv[])
 
     // 1 iteration
 #ifdef GEM5_ANNOTATION
+    // COPY ROI
     m5_work_begin(0,0);
 #endif
     t_copy = copy(c, a);
+#ifdef GEM5_ANNOTATION
+    m5_work_end(0,0);
+    // SCALE ROI
+    m5_work_begin(0,0);
+#endif
     t_scale = scale(b, c, scale_factor);
+#ifdef GEM5_ANNOTATION
+    m5_work_end(0,0);
+    // ADD ROI
+    m5_work_begin(0,0);
+#endif
     t_add = add(c, a, b);
+#ifdef GEM5_ANNOTATION
+    m5_work_end(0,0);
+    // TRIAD ROI
+    m5_work_begin(0,0);
+#endif
     t_triad = triad(a, b, c, scale_factor);
 #ifdef GEM5_ANNOTATION
     m5_work_end(0,0);
